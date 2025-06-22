@@ -1,9 +1,11 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import star from "@/assets/images/star.png";
+import { useRouter } from "expo-router";
 
 interface Movie {
+  id: string;
   poster: string;
   title: string;
   category: string;
@@ -16,10 +18,11 @@ interface Props {
 }
 
 const MovieCard = ({ movie }: Props) => {
-  const { poster, title, category, type, raiting } = movie;
+  const {id, poster, title, category, type, raiting } = movie;
+  const router = useRouter()
 
   return (
-    <View style={styles.box} >
+    <Pressable style={styles.box} onPress={() => router.push(`/SpecificMovie/${id}`)}>
       <Image
         resizeMode="cover"
         style={styles.image}
@@ -37,7 +40,7 @@ const MovieCard = ({ movie }: Props) => {
           {category} | {type}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

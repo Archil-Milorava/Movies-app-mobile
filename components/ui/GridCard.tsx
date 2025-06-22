@@ -1,6 +1,7 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
+import { useRouter } from "expo-router";
 import star from "../../assets/images/star.png";
 
 interface Movie {
@@ -9,6 +10,7 @@ interface Movie {
   category: string;
   type: string;
   raiting?: number;
+  id: string;
 }
 
 interface Props {
@@ -16,10 +18,11 @@ interface Props {
 }
 
 const GridCard = ({ movie }: Props) => {
-  const { poster, title, category, type, raiting } = movie;
+  const {id, poster, title, category, type, raiting } = movie;
+  const router = useRouter()
 
   return (
-    <View style={styles.box}>
+    <Pressable onPress={() => router.push(`/SpecificMovie/${id}`)} style={styles.box}>
       <Image
         resizeMode="cover"
         style={styles.image}
@@ -37,7 +40,7 @@ const GridCard = ({ movie }: Props) => {
           {category} | {type}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
