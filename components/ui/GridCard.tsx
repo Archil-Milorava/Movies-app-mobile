@@ -1,6 +1,8 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
+import star from "../../assets/images/star.png";
+
 interface Movie {
   poster: string;
   title: string;
@@ -13,7 +15,7 @@ interface Props {
   movie: Movie;
 }
 
-const MovieCard = ({ movie }: Props) => {
+const GridCard = ({ movie }: Props) => {
   const { poster, title, category, type, raiting } = movie;
 
   return (
@@ -26,6 +28,7 @@ const MovieCard = ({ movie }: Props) => {
         }}
       />
       <View style={styles.raiting}>
+        <Image style={styles.starIcon} source={star} />
         <Text style={styles.raitingText}>{raiting}</Text>
       </View>
       <View style={styles.container}>
@@ -38,16 +41,16 @@ const MovieCard = ({ movie }: Props) => {
   );
 };
 
-export default MovieCard;
+export default GridCard;
 
 const styles = StyleSheet.create({
   box: {
-    backgroundColor: "",
-    height: 214,
-    width: 116,
+    width: "30%",
+    height: 216,
     borderRadius: 6,
     overflow: "hidden",
     position: "relative",
+    backgroundColor: "",
   },
   image: {
     height: "80%",
@@ -63,6 +66,7 @@ const styles = StyleSheet.create({
     color: "#888888",
   },
   container: {
+    backgroundColor: "#000c3f",
     flex: 1,
     justifyContent: "space-around",
     alignItems: "flex-start",
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
   raiting: {
     position: "absolute",
     backgroundColor: "#fff",
-    width: 26,
+    width: 30,
     height: 16,
     right: 4,
     top: 4,
@@ -78,10 +82,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    gap: 0.5,
     borderRadius: 4,
+    flexDirection: "row",
   },
   raitingText: {
     fontSize: 10,
     fontWeight: "bold",
+  },
+  starIcon: {
+    height: 10,
+    width: 10,
   },
 });

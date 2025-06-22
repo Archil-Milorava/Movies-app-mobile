@@ -1,8 +1,9 @@
+import GridCard from "@/components/ui/GridCard";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
-import MovieCard from "../components/ui/MovieCard";
-import SearchInput from "../features/search/SearchInput";
+import { FlatList, ScrollView, StyleSheet, Text } from "react-native";
+import MovieCard from "../../components/ui/MovieCard";
+import SearchInput from "../../features/search/SearchInput";
 
 const media = [
   {
@@ -80,20 +81,33 @@ const media = [
 
 const Index = () => {
   return (
-    <LinearGradient colors={["#010430", "#01001d"]} style={styles.container}>
-      <Text style={styles.text}>index</Text>
-      <SearchInput />
-
-      <Text style={styles.text}>Popular Movies</Text>
-
-      <FlatList
-        data={media}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <MovieCard movie={item} key={item.id}  />}
-        horizontal
-        contentContainerStyle={styles.movieList}
-      />
-    </LinearGradient>
+    <ScrollView>
+      <LinearGradient colors={["#010430", "#01001d"]} style={styles.container}>
+        <SearchInput />
+        <Text style={styles.textBig}>Popular Movies</Text>
+        <FlatList
+          data={media}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <MovieCard movie={item} key={item.id} />}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.movieList}
+        />
+        <Text style={styles.textBig}>Latest Movies</Text>
+        <FlatList
+          data={media}
+          keyExtractor={(item) => item.id}
+          numColumns={3}
+          renderItem={({ item }) => <GridCard movie={item} />}
+          scrollEnabled={false}
+          contentContainerStyle={styles.gridContainer}
+          columnWrapperStyle={{
+            justifyContent: "space-between",
+            marginBottom: 20,
+          }}
+        />
+      </LinearGradient>
+    </ScrollView>
   );
 };
 
@@ -102,15 +116,23 @@ export default Index;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    paddingTop: 30,
     justifyContent: "center",
     paddingHorizontal: 20,
   },
-  text: {
+  textBig: {
     color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
   movieList: {
-    marginVertical: 20,
+    marginBottom: 20,
     gap: 20,
+    height: 220,
+    overflow: "hidden",
+  },
+  gridContainer: {
+    marginBottom: 100,
   },
 });

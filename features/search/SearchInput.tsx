@@ -17,9 +17,7 @@ export default SearchInput;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    alignItems: "center",
-    justifyContent: "center",
+    marginVertical: 20,
   },
   text: {
     color: "#fff",
