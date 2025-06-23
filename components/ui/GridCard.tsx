@@ -22,7 +22,7 @@ const GridCard = ({ movie }: Props) => {
   const router = useRouter()
 
   return (
-    <Pressable onPress={() => router.push(`/SpecificMovie/${id}`)} style={styles.box}>
+    <Pressable onPress={() => router.push(`/SingleMovie/${id}`)} style={styles.box}>
       <Image
         resizeMode="cover"
         style={styles.image}

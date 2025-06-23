@@ -22,7 +22,7 @@ const MovieCard = ({ movie }: Props) => {
   const router = useRouter()
 
   return (
-    <Pressable style={styles.box} onPress={() => router.push(`/SpecificMovie/${id}`)}>
+    <Pressable style={styles.box} onPress={() => router.push(`/SingleMovie/${id}`)}>
       <Image
         resizeMode="cover"
         style={styles.image}

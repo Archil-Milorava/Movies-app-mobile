@@ -8,25 +8,32 @@ export default function _layout() {
     <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
       <Tabs
         screenOptions={{
+          animation: "fade",
+          tabBarShowLabel: true,
           tabBarStyle: {
             position: "absolute",
-            height: 60,
+            height: 50,
             backgroundColor: "#000f2b",
-            borderRadius: 10,
             borderTopWidth: 0,
-            paddingBottom: 10,
-            paddingTop: 8,
+            paddingBottom: 0,
+            paddingTop: 0,
+            borderRadius: 50,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.1,
             shadowRadius: 6,
             elevation: 10,
+            marginHorizontal: 10,
+            marginBottom: 5,
           },
           tabBarLabelStyle: {
-            fontSize: 12,
-            fontWeight: "600",
             color: "#fff",
           },
+          tabBarItemStyle: {
+            borderRadius: 100,
+            overflow: "hidden",
+          },
+          tabBarActiveBackgroundColor: "#4312c9",
           tabBarActiveTintColor: "#ffffff",
           tabBarInactiveTintColor: "#8a8a8a",
         }}
