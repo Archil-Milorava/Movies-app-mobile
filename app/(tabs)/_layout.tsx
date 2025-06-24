@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function _layout() {
   return (
+    
     <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
       <Tabs
         screenOptions={{

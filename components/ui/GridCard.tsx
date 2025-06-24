@@ -1,33 +1,31 @@
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
+import { MovieType } from "@/types/moviesTypes";
 import { useRouter } from "expo-router";
 import star from "../../assets/images/star.png";
 
-interface Movie {
-  poster: string;
-  title: string;
-  category: string;
-  type: string;
-  raiting?: number;
-  id: string;
-}
-
 interface Props {
-  movie: Movie;
+  movie: MovieType;
 }
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const GridCard = ({ movie }: Props) => {
-  const {id, poster, title, category, type, raiting } = movie;
-  const router = useRouter()
+  const { id, title, poster_path, vote_average } = movie;
+  const router = useRouter();
+
+  const raiting = vote_average.toFixed(1);
 
   return (
-    <Pressable onPress={() => router.push(`/SingleMovie/${id}`)} style={styles.box}>
+    <Pressable
+      onPress={() => router.push(`/SingleMovie/${id}`)}
+      style={styles.box}
+    >
       <Image
         resizeMode="cover"
         style={styles.image}
         source={{
-          uri: poster,
+          uri:`${IMAGE_BASE_URL}${movie.poster_path}`,
         }}
       />
       <View style={styles.raiting}>
@@ -36,9 +34,7 @@ const GridCard = ({ movie }: Props) => {
       </View>
       <View style={styles.container}>
         <Text style={styles.h1}>{title}</Text>
-        <Text style={styles.samllText}>
-          {category} | {type}
-        </Text>
+        <Text style={styles.samllText}>no category so far</Text>
       </View>
     </Pressable>
   );

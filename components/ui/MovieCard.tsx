@@ -1,33 +1,32 @@
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-import star from "@/assets/images/star.png";
+import { MovieType } from "@/types/moviesTypes";
 import { useRouter } from "expo-router";
-
-interface Movie {
-  id: string;
-  poster: string;
-  title: string;
-  category: string;
-  type: string;
-  raiting?: number;
-}
+import star from "../../assets/images/star.png";
 
 interface Props {
-  movie: Movie;
+  movie: MovieType;
 }
 
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
 const MovieCard = ({ movie }: Props) => {
-  const {id, poster, title, category, type, raiting } = movie;
-  const router = useRouter()
+  const router = useRouter();
+
+  const { id, poster_path, vote_average, title } = movie;
+  const raiting = vote_average.toFixed(1);
 
   return (
-    <Pressable style={styles.box} onPress={() => router.push(`/SingleMovie/${id}`)}>
+    <Pressable
+      style={styles.box}
+      onPress={() => router.push(`/SingleMovie/${id}`)}
+    >
       <Image
         resizeMode="cover"
         style={styles.image}
         source={{
-          uri: poster,
+          uri: `${IMAGE_BASE_URL}${movie.poster_path}`,
         }}
       />
       <View style={styles.raiting}>
@@ -37,7 +36,7 @@ const MovieCard = ({ movie }: Props) => {
       <View style={styles.container}>
         <Text style={styles.h1}>{title}</Text>
         <Text style={styles.samllText}>
-          {category} | {type}
+          {/* {movie.genre_ids.} */} nothing so far
         </Text>
       </View>
     </Pressable>

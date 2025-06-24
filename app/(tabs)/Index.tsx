@@ -1,102 +1,73 @@
 import GridCard from "@/components/ui/GridCard";
+import {
+  useGetLatestMovies,
+  useGetPopularMovies,
+} from "@/features/movies/moviesHook";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { FlatList, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+} from "react-native";
 import MovieCard from "../../components/ui/MovieCard";
 import SearchInput from "../../features/search/SearchInput";
 
-const media = [
-  {
-    id: "1",
-    poster:
-      "https://upload.wikimedia.org/wikipedia/en/3/3d/The_Lion_King_poster.jpg",
-    title: "The Lion King",
-    category: "Animation",
-    type: "movie",
-    raiting: 4.3,
-  },
-  {
-    id: "2",
-    poster:
-      "https://upload.wikimedia.org/wikipedia/en/0/0d/Avengers_Endgame_poster.jpg",
-    title: "Avengers: Endgame",
-    category: "Action",
-    type: "movie",
-    raiting: 4.8,
-  },
-  {
-    id: "3",
-    poster:
-      "https://upload.wikimedia.org/wikipedia/en/d/d6/Black_Panther_%28film%29_poster.jpg",
-    title: "Black Panther",
-    category: "Action",
-    type: "movie",
-    raiting: 4.4,
-  },
-  {
-    id: "4",
-    poster:
-      "https://upload.wikimedia.org/wikipedia/en/f/ff/The_Batman_%28film%29_poster.jpg",
-    title: "The Batman",
-    category: "Thriller",
-    type: "movie",
-    raiting: 3.5,
-  },
-  {
-    id: "5",
-    poster:
-      "https://upload.wikimedia.org/wikipedia/commons/3/38/Stranger_Things_logo.png",
-    title: "Stranger Things",
-    category: "Sci-Fi",
-    type: "tv",
-    raiting: 4.1,
-  },
-  {
-    id: "6",
-    poster:
-      "https://upload.wikimedia.org/wikipedia/en/d/d8/Game_of_Thrones_title_card.jpg",
-    title: "Game of Thrones",
-    category: "Fantasy",
-    type: "tv",
-  },
-  {
-    id: "7",
-    poster:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBmR1UfShiKt6vY3J9tjztfpJvB7qM3xIQ_-TUF25_zZYzoTfz",
-    title: "Breaking Bad",
-    category: "Crime",
-    type: "tv",
-    raiting: 1.4,
-  },
-  {
-    id: "8",
-    poster:
-      "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
-    title: "Inception",
-    category: "Sci-Fi",
-    type: "movie",
-    raiting: 2.4,
-  },
-];
-
 const Index = () => {
+  const {
+    isLoading: latestLoading,
+    error: latestError,
+    latestMovies,
+  } = useGetLatestMovies();
+  const {
+    isLoading: popularLoading,
+    error: popularError,
+    popularMovies,
+  } = useGetPopularMovies();
+
+  if (latestLoading || popularLoading) {
+    return (
+      <LinearGradient
+        colors={["#010430", "#01001d"]}
+        style={styles.loaderContainer}
+      >
+        <ActivityIndicator size="large" color="#fff" />
+      </LinearGradient>
+    );
+  }
+  if (latestError || popularError) {
+    return (
+      <LinearGradient
+        colors={["#010430", "#01001d"]}
+        style={styles.loaderContainer}
+      >
+        <Text style={{ color: "white" }}>
+          {" "}
+          {latestError?.message || popularError?.message}
+        </Text>
+      </LinearGradient>
+    );
+  }
+
   return (
     <ScrollView>
       <LinearGradient colors={["#010430", "#01001d"]} style={styles.container}>
         <SearchInput />
-        <Text style={styles.textBig}>Popular Movies</Text>
+        <Text style={styles.textBig}>Latest Movies</Text>
         <FlatList
-          data={media}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <MovieCard movie={item} key={item.id} />}
+          data={latestMovies}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <MovieCard movie={item} />}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.movieList}
         />
-        <Text style={styles.textBig}>Latest Movies</Text>
+        <Text style={styles.textBig}>Popular Movies</Text>
         <FlatList
-          data={media}
-          keyExtractor={(item) => item.id}
+          data={popularMovies}
+          keyExtractor={(item) => item.id.toString()}
           numColumns={3}
           renderItem={({ item }) => <GridCard movie={item} />}
           scrollEnabled={false}
@@ -134,5 +105,11 @@ const styles = StyleSheet.create({
   },
   gridContainer: {
     marginBottom: 100,
+  },
+  loaderContainer: {
+    flex: 1,
+    height: 110,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
