@@ -27,16 +27,17 @@ const Index = () => {
     popularMovies,
   } = useGetPopularMovies();
 
-  if (latestLoading || popularLoading) {
-    return (
-      <LinearGradient
-        colors={["#010430", "#01001d"]}
-        style={styles.loaderContainer}
-      >
-        <ActivityIndicator size="large" color="#fff" />
-      </LinearGradient>
-    );
-  }
+  // if (latestLoading) {
+  //   return (
+  //     <LinearGradient
+  //       colors={["#010430", "#01001d"]}
+  //       style={styles.loaderContainer}
+  //     >
+  //       <ActivityIndicator size="large" color="#fff" />
+  //     </LinearGradient>
+  //   );
+  // }
+
   if (latestError || popularError) {
     return (
       <LinearGradient
@@ -69,7 +70,7 @@ const Index = () => {
           data={popularMovies}
           keyExtractor={(item) => item.id.toString()}
           numColumns={3}
-          renderItem={({ item }) => <GridCard movie={item} />}
+          renderItem={({ item }) => <GridCard isLoading={popularLoading} movie={item} />}
           scrollEnabled={false}
           contentContainerStyle={styles.gridContainer}
           columnWrapperStyle={{
@@ -113,3 +114,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+
+

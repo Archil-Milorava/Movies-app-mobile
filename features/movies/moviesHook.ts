@@ -16,6 +16,7 @@ export const useGetPopularMovies = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["popularMovies"],
     queryFn: () => getPopularMovies(),
+    retry: false,
   });
 
   const popularMovies = data?.results;

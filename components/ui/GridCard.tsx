@@ -7,14 +7,24 @@ import star from "../../assets/images/star.png";
 
 interface Props {
   movie: MovieType;
+  isLoading: boolean
 }
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-const GridCard = ({ movie }: Props) => {
+const GridCard = ({ movie, isLoading }: Props) => {
   const { id, title, poster_path, vote_average } = movie;
   const router = useRouter();
 
   const raiting = vote_average.toFixed(1);
+
+  if (isLoading) {
+  return (
+    <View style={[styles.box, styles.loadingBox]}>
+      <View style={styles.imagePlaceholder} />
+      <View style={styles.textPlaceholder} />
+    </View>
+  );
+}
 
   return (
     <Pressable
@@ -25,7 +35,7 @@ const GridCard = ({ movie }: Props) => {
         resizeMode="cover"
         style={styles.image}
         source={{
-          uri:`${IMAGE_BASE_URL}${movie.poster_path}`,
+          uri: `${IMAGE_BASE_URL}${poster_path}`,
         }}
       />
       <View style={styles.raiting}>
@@ -93,4 +103,25 @@ const styles = StyleSheet.create({
     height: 10,
     width: 10,
   },
+  loadingBox: {
+  backgroundColor: "#1a1a1a", // dark skeleton background
+  justifyContent: "space-between",
+  paddingVertical: 5,
+  paddingHorizontal: 5,
+},
+
+imagePlaceholder: {
+  height: "80%",
+  width: "100%",
+  backgroundColor: "#333",
+  borderRadius: 4,
+},
+
+textPlaceholder: {
+  height: 20,
+  width: "80%",
+  backgroundColor: "#444",
+  borderRadius: 4,
+  marginTop: 8,
+},
 });
